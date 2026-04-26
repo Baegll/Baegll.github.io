@@ -1,12 +1,303 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Twitter DM Tool</title>
-        <h1>Description</h1>
-    </head>
-    <body>
-        This tool will be able to apply a NLP process to twitter DMs to acrue relevant information.
-    </body>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Natalie Johanek — Software Engineer</title>
+  <meta name="description" content="Natalie Johanek — Software Engineer building distributed systems. Focused on low-latency APIs, developer tooling, and system observability.">
+  <link rel="icon" href="/blog/static/icon.png" type="image/png">
+  <script src="/assets/theme.js" data-base=""></script>
+  <link rel="stylesheet" href="/assets/portfolio.css">
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <button class="sidebar-logo" onclick="navigateTo('home')">NJ</button>
+    <div class="sidebar-links">
+      <a href="#" class="sidebar-link active" data-page="home" onclick="navigateTo('home');return false">home</a>
+      <a href="/projects/" class="sidebar-link" data-page="projects">projects</a>
+      <a href="#" class="sidebar-link" data-page="blog" onclick="navigateTo('blog');return false">blog</a>
+      <a href="#" class="sidebar-link" data-page="about" onclick="navigateTo('about');return false">about</a>
+      <a href="#" class="sidebar-link" data-page="contact" onclick="navigateTo('contact');return false">contact</a>
+    </div>
+    <div class="sidebar-bottom">
+      <button class="icon-btn" onclick="toggleTheme()" aria-label="Toggle theme">
+        <svg class="icon-sun" style="display:none" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+        <svg class="icon-moon" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Mobile bottom nav -->
+  <nav class="mobile-nav" id="mobile-nav">
+    <button class="active" data-page="home" onclick="navigateTo('home')">
+      <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0a1 1 0 01-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 01-1 1h-2z"/></svg>
+      Home
+    </button>
+    <button data-page="about" onclick="navigateTo('about')">
+      <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+      About
+    </button>
+    <button data-page="contact" onclick="navigateTo('contact')">
+      <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+      Contact
+    </button>
+    <button onclick="toggleTheme()">
+      <svg class="icon-sun" style="display:none" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+      <svg class="icon-moon" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+      Theme
+    </button>
+  </nav>
+
+  <!-- Main -->
+  <div class="main" id="main">
+
+    <!-- Top strip -->
+    <div class="top-strip">
+      <span>baegll.github.io</span>
+      <span id="strip-path" style="font-family:var(--t-font-code,'IBM Plex Mono',monospace);font-size:10px">/ index</span>
+      <span>Software Engineer — Amazon</span>
+    </div>
+
+    <!-- ═══ HOME ═══ -->
+    <div class="page-section active" id="page-home">
+
+      <!-- Hero -->
+      <div class="hero">
+        <div>
+          <div style="margin-bottom:32px">
+            <span class="hero-role">Software Engineer</span>
+          </div>
+          <h1 class="hero-name">
+            Natalie<br>
+            <span class="accent">Johanek</span><span style="color:var(--t-cta);font-family:var(--t-font-code,'IBM Plex Mono',monospace);font-size:0.15em;vertical-align:super;letter-spacing:0">.</span>
+          </h1>
+        </div>
+        <div class="hero-right">
+          <img src="/assets/headshot.jpg" alt="Natalie Johanek" class="hero-photo">
+          <p class="hero-desc">
+            Building distributed systems at Amazon. Focused on low-latency APIs, developer tooling, and system observability.
+          </p>
+          <div style="display:flex;gap:12px">
+            <a href="/projects/" class="cta-btn" style="margin-top:0;padding:10px 20px;font-size:13px">
+              View Work
+              <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </a>
+            <button class="btn-outline" onclick="navigateTo('contact')">Contact</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Keyword strip -->
+      <div class="keyword-strip">
+        <span>Distributed Systems</span>
+        <span><span class="kw-dot"></span>Low-latency APIs</span>
+        <span><span class="kw-dot"></span>Developer Tooling</span>
+        <span><span class="kw-dot"></span>System Observability</span>
+      </div>
+
+      <!-- Info grid -->
+      <div class="info-grid">
+        <div class="info-cell">
+          <div class="info-label">Current role</div>
+          <div class="info-value">SDE I — Amazon</div>
+        </div>
+        <div class="info-cell">
+          <div class="info-label">Location</div>
+          <div class="info-value">Austin, United States</div>
+        </div>
+        <div class="info-cell">
+          <div class="info-label">Focus area</div>
+          <div class="info-value">Distributed Systems</div>
+        </div>
+        <div class="info-cell">
+          <div class="info-label">Outside work</div>
+          <div class="info-value">Fencing Coach</div>
+        </div>
+      </div>
+
+      <!-- Latest writing teaser -->
+      <div class="section-header">
+        <span class="section-title">Latest Writing</span>
+        <a href="/blog/" class="section-link">All posts →</a>
+      </div>
+      <a href="/blog/" class="blog-row">
+        <div>
+          <div class="blog-title">Context Management: Getting Better Responses from AI</div>
+          <div class="blog-excerpt">Practical techniques for managing context windows when working with large language models.</div>
+        </div>
+        <div class="blog-date">Apr 2026</div>
+      </a>
+      <a href="/blog/" class="blog-row">
+        <div>
+          <div class="blog-title">Generative AI and Its Speed</div>
+          <div class="blog-excerpt">Thinking through the pace of AI development and what it means for software engineers.</div>
+        </div>
+        <div class="blog-date">Mar 2026</div>
+      </a>
+    </div>
+
+    <!-- ═══ ABOUT ═══ -->
+    <div class="page-section" id="page-about">
+      <div class="about-grid">
+        <div class="about-left">
+          <img src="/assets/headshot.jpg" alt="Natalie Johanek" class="about-photo">
+          <p class="about-label">About</p>
+          <h2 class="about-heading">A bit<br>about me.</h2>
+          <p class="about-body" style="margin-bottom:16px">
+            I'm a Software Engineer at Amazon working on distributed systems for last-mile delivery. I build low-latency APIs under strict SLAs, architect data pipelines, and care deeply about developer tooling and system observability.
+          </p>
+          <p class="about-body" style="opacity:0.7">
+            Outside of work, I coach competitive fencing, run tournament operations, and write about software. I studied Computer Science at the University of North Texas with a minor in Mathematics.
+          </p>
+        </div>
+        <div class="about-right">
+          <div style="padding-top:40px">
+            <div class="fact-row">
+              <span class="fact-label">Employer</span>
+              <span class="fact-value">Amazon</span>
+            </div>
+            <div class="fact-row">
+              <span class="fact-label">Role</span>
+              <span class="fact-value">Software Engineer I</span>
+            </div>
+            <div class="fact-row">
+              <span class="fact-label">Domain</span>
+              <span class="fact-value">Distributed Systems</span>
+            </div>
+            <div class="fact-row">
+              <span class="fact-label">Education</span>
+              <span class="fact-value">CS + Math · UNT</span>
+            </div>
+            <div class="fact-row">
+              <span class="fact-label">Outside work</span>
+              <span class="fact-value">Fencing Coach &amp; TO</span>
+            </div>
+            <div class="fact-row">
+              <span class="fact-label">Currently reading</span>
+              <span class="fact-value">Designing Data-Intensive Apps</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ CONTACT ═══ -->
+    <div class="page-section" id="page-contact">
+      <div class="contact-section" style="border-top:none">
+        <div class="contact-left">
+          <p class="contact-label">Get in touch</p>
+          <h2 class="contact-headline">Let's work<br>together.</h2>
+          <p class="contact-sub">Have a project in mind or just want to chat? Reach out — I'm always happy to connect.</p>
+          <a id="email-link" href="#" class="cta-btn">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+            <span id="email-text">Say Hello</span>
+          </a>
+        </div>
+        <div class="contact-right">
+          <a href="https://github.com/Baegll" target="_blank" rel="noopener noreferrer" class="contact-link">
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+            GitHub
+            <svg style="margin-left:auto" width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+          </a>
+          <a href="https://www.linkedin.com/in/natlj/" target="_blank" rel="noopener noreferrer" class="contact-link">
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            LinkedIn
+            <svg style="margin-left:auto" width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+          </a>
+          <a href="/blog/" class="contact-link" style="border-bottom:none">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
+            Blog
+            <svg style="margin-left:auto" width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ BLOG (teaser — links to /blog/) ═══ -->
+    <div class="page-section" id="page-blog">
+      <div class="section-header" style="padding-top:56px">
+        <span class="section-title">Writing</span>
+        <span class="section-count">04 posts</span>
+      </div>
+      <a href="/blog/" class="blog-row">
+        <div>
+          <div class="blog-title">Context Management: Getting Better Responses from AI</div>
+          <div class="blog-excerpt">Practical techniques for managing context windows when working with large language models.</div>
+        </div>
+        <div class="blog-date">Apr 2026</div>
+      </a>
+      <a href="/blog/" class="blog-row">
+        <div>
+          <div class="blog-title">Generative AI and Its Speed</div>
+          <div class="blog-excerpt">Thinking through the pace of AI development and what it means for software engineers.</div>
+        </div>
+        <div class="blog-date">Mar 2026</div>
+      </a>
+      <a href="/blog/" class="blog-row">
+        <div>
+          <div class="blog-title">Burnout and Its Consequences</div>
+          <div class="blog-excerpt">A candid look at burnout in high-pressure engineering environments and how to recover.</div>
+        </div>
+        <div class="blog-date">Feb 2026</div>
+      </a>
+      <a href="/blog/" class="blog-row">
+        <div>
+          <div class="blog-title">Tournament Design and Incentives</div>
+          <div class="blog-excerpt">Applying mechanism design principles to competitive fencing tournament structures.</div>
+        </div>
+        <div class="blog-date">Jan 2026</div>
+      </a>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <span>&copy; 2026 Natalie Johanek</span>
+      <span style="font-family:var(--t-font-code,'IBM Plex Mono',monospace);font-size:11px">v2026.04</span>
+    </footer>
+  </div>
+
+  <script>
+    // SPA-style page navigation
+    var currentPage = 'home';
+    var pages = ['home', 'projects', 'blog', 'about', 'contact'];
+    var pathMap = { home: '/ index', projects: '/ projects', blog: '/ blog', about: '/ about', contact: '/ contact' };
+
+    function navigateTo(page) {
+      // For projects, navigate to the actual page
+      if (page === 'projects') {
+        window.location.href = '/projects/';
+        return;
+      }
+
+      currentPage = page;
+
+      // Toggle page sections
+      document.querySelectorAll('.page-section').forEach(function(el) { el.classList.remove('active'); });
+      var target = document.getElementById('page-' + page);
+      if (target) target.classList.add('active');
+
+      // Update sidebar active state
+      document.querySelectorAll('.sidebar-link').forEach(function(el) {
+        el.classList.toggle('active', el.getAttribute('data-page') === page);
+      });
+
+      // Update mobile nav active state
+      document.querySelectorAll('.mobile-nav button[data-page]').forEach(function(el) {
+        el.classList.toggle('active', el.getAttribute('data-page') === page);
+      });
+
+      // Update top strip path
+      var strip = document.getElementById('strip-path');
+      if (strip) strip.textContent = pathMap[page] || '/ ' + page;
+
+      // Scroll to top
+      var main = document.getElementById('main');
+      if (main) main.scrollTo({ top: 0 });
+      window.scrollTo({ top: 0 });
+    }
+  </script>
+
+</body>
 </html>

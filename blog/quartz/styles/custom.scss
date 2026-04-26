@@ -1,0 +1,21 @@
+@use "./base.scss";
+
+// Unify with main site design system
+// Rounded corners matching the main site's rounded-2xl (1rem)
+.search,
+.darkmode,
+.reader-mode {
+  button {
+    border-radius: 0.75rem;
+  }
+}
+
+// Card-like elements get the same rounded treatment
+.callout {
+  border-radius: 1rem;
+}
+
+// Links match the CTA blue hover behavior
+a {
+  transition: color 200ms ease;
+}

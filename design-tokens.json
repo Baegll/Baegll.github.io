@@ -1,0 +1,43 @@
+{
+  "fonts": {
+    "heading": "Archivo",
+    "body": "Space Grotesk",
+    "code": "IBM Plex Mono",
+    "googleFontsUrl": "https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700;900&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+  },
+  "colors": {
+    "lightMode": {
+      "primary": "#18181B",
+      "secondary": "#3F3F46",
+      "cta": "#2563EB",
+      "ctaHover": "#3B82F6",
+      "background": "#F4F4F5",
+      "text": "#09090B",
+      "border": "#D4D4D8",
+      "muted": "#A1A1AA",
+      "highlight": "rgba(37, 99, 235, 0.1)",
+      "textHighlight": "#2563EB22"
+    },
+    "darkMode": {
+      "primary": "#FAFAFA",
+      "secondary": "#A1A1AA",
+      "cta": "#2563EB",
+      "ctaHover": "#3B82F6",
+      "background": "#18181B",
+      "text": "#FAFAFA",
+      "border": "#27272A",
+      "muted": "#52525B",
+      "highlight": "rgba(37, 99, 235, 0.15)",
+      "textHighlight": "#2563EB33"
+    }
+  },
+  "site": {
+    "name": "Natalie Johanek",
+    "title": "Natalie Johanek — Software Engineer",
+    "blogTitle": "Natalie's Blog",
+    "baseUrl": "baegll.github.io",
+    "github": "https://github.com/Baegll",
+    "linkedin": "https://www.linkedin.com/in/natlj/",
+    "email": "nat.johanek@gmail.com"
+  }
+}

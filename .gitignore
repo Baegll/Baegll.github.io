@@ -1,0 +1,14 @@
+_site/
+node_modules/
+.DS_Store
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+.agent/
+.codex/
+.claude/
+.cursorrules/
+.kiro/
+design-system/
