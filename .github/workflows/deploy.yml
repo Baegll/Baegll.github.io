@@ -15,13 +15,13 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deploy.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
 
       - uses: actions/setup-node@v4
         with:
@@ -43,9 +43,24 @@ jobs:
           mkdir -p _site/projects
           cp projects/index.html _site/projects/
 
+      - name: Verify Pages output
+        run: |
+          test -f _site/index.html
+          test -f _site/blog/index.html
+          test -f _site/projects/index.html
+          find _site -maxdepth 2 -type f | sort
+
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site
 
-      - id: deploy
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deploy
         uses: actions/deploy-pages@v4
