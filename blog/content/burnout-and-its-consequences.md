@@ -1,6 +1,6 @@
 ---
 title: "Burnout and how I push through it to reach equilibrium"
-date: 2026-xx-xx
+date: 2026-04-26
 tags:
   - productivity
   - capitalism
