@@ -30,10 +30,10 @@ jobs:
           cache-dependency-path: blog/package-lock.json
 
       - name: Install and build Quartz
+        working-directory: blog
         run: |
-          cd blog
           npm ci
-          npx quartz build -o ../_site/blog
+          node ./quartz/bootstrap-cli.mjs build -o ../_site/blog
 
       - name: Copy static files
         run: |
