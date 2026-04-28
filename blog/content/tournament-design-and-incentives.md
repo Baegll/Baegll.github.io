@@ -68,6 +68,8 @@ Flat scoring produces roughly 4 to 5 times more close matches (within 2 points) 
 
 Flat scoring also produces lower total point counts per match (6.7 vs 17.3 for full afterblow), which mathematically compresses margins. A 2-point gap in a flat match is a larger proportion of the total score than a 2-point gap in a weighted match. The absolute margin difference is real, but the scale difference means these numbers aren't directly comparable without normalization. Even so, flat scoring still produces more close matches no matter how you slice it.
 
+"Close" also means different things depending on the scoring scale. A 2-point margin in flat scoring is two full exchanges. In a weighted system that scores 2- and 3-point exchanges, a 3-point margin could be a single exchange apart — arguably closer in terms of actual fencing, but it wouldn't qualify as "close" by the absolute point threshold used here. The close match metric captures point compression, not competitive tension, and those aren't always the same thing.
+
 Weighted scoring multiplies small skill advantages. If you consistently hit the head (3 points) while your opponent hits your arm (1 point), weighted scoring turns a slight technical edge into a rout. Flat scoring compresses this, so every hit counts the same and the match stays closer even when one fighter has better target selection.
 
 ---
@@ -75,6 +77,8 @@ Weighted scoring multiplies small skill advantages. If you consistently hit the 
 What don't the numbers capture?
 
 Afterblow definitions aren't standardized. What counts as an "afterblow" versus a "double" varies by event. For this analysis, we rely on how each event's staff categorized exchanges in HEMA Scorecard. An afterblow is assumed to be a single or two-tempo hit after the first scoring action. If both fighters strike at the same time, it should be recorded as a double. In tournaments that don't score afterblows, simultaneous, single-tempo, and two-tempo responses are all recorded as doubles. Misclassification between these categories is certainly present in the data.
+
+More importantly, the significant majority of tournaments coded as "afterblow" in Scorecard likely don't count afterblows in the way the term is understood today. The time window these events use for an afterblow is more or less the same as what a deductive afterblow tournament would call a double. The "afterblow" label in Scorecard dates back to 2015 when the software was first built, and the terminology has since shifted in the community. This means the data probably overstates the practical difference between afterblow and non-afterblow formats. Many "afterblow" events are functionally closer to deductive double-penalty systems than to true afterblow scoring.
 
 Target recording depends on users. No-afterblow events record target information at much lower rates than afterblow events, so the target distribution comparison across families isn't reliable. Since Scorecard tournament staff fill out the data, misclassified exchanges, missed afterblows, and inconsistent target labeling are all in there. With 314,000 exchanges the noise should average out for aggregate statistics, but individual tournament numbers should be taken with a grain of salt.
 
