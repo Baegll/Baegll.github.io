@@ -17,9 +17,9 @@ Using data pulled directly from [HEMA Scorecard](https://hemascorecard.com), I l
 
 Longsword tournaments on HEMA Scorecard can be assigned into one of four categories based on how they handle target scoring and simultaneous actions. Afterblow definitions vary by event, so we roughly use the categories as reported in the scorecard data.
 
-**Weighted + Full Afterblow** scores head and thrust hits at 3 points, limbs at 1. If your opponent lands an afterblow, they score the full value of their hit too. (SoCal Swordfight, Clash for the Cash, CombatCon.)
+**Weighted + Full Afterblow** scores head and thrust hits at 3 points, limbs at 1. If your opponent lands an afterblow, they score the full value of their hit too. (Clash for the Cash, CombatCon.)
 
-**Weighted + Deductive Afterblow** uses the same weighted targets, but the afterblow value is reduced. Land a 3-point head cut and receive an afterblow to the torso, your opponent only gets 1 or 2 instead of 3. (Donnybrook, AG Open.)
+**Weighted + Deductive Afterblow** uses the same weighted targets, but the afterblow value is reduced. Land a 3-point head cut and receive an afterblow to the torso, your opponent only gets 1 or 2 instead of 3. (SoCal Swordfight, Donnybrook, AG Open.)
 
 **Weighted, No Afterblow** has weighted target values, but only the initial hit counts. No afterblow rules. (Black Horns Cup, FechtBerg, Swordmasters Cup.)
 
@@ -82,7 +82,7 @@ More importantly, the significant majority of tournaments coded as "afterblow" i
 
 Target recording depends on users. No-afterblow events record target information at much lower rates than afterblow events, so the target distribution comparison across families isn't reliable. Since Scorecard tournament staff fill out the data, misclassified exchanges, missed afterblows, and inconsistent target labeling are all in there. With 314,000 exchanges the noise should average out for aggregate statistics, but individual tournament numbers should be taken with a grain of salt.
 
-Event difficulty isn't controlled. SoCal Swordfight and a local 16-person regional are both "full afterblow" events, but the competition level is wildly different. The fighter performance analysis controls for this by using within-fighter comparisons, but the exchange-level analysis doesn't.
+Event difficulty isn't controlled. CombatCon and a local 16-person regional are both "full afterblow" events, but the competition level is wildly different. The fighter performance analysis controls for this by using within-fighter comparisons, but the exchange-level analysis doesn't.
 
 The four families aren't exhaustive. Some tournaments use capped afterblows, escalating double penalties, or hybrid systems that don't fit neatly into these categories. I excluded those events from the analysis. The four families cover the large majority of longsword tournaments on HEMA Scorecard, but not all of them.
 
