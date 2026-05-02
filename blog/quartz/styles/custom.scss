@@ -15,7 +15,104 @@
   border-radius: 1rem;
 }
 
-// Links match the CTA blue hover behavior
+// Links match the shared Black+Pink accent behavior
 a {
   transition: color 200ms ease;
+}
+
+:root {
+  color-scheme: light;
+}
+
+:root[saved-theme="dark"] {
+  color-scheme: dark;
+}
+
+::selection {
+  background: var(--textHighlight);
+}
+
+a,
+button,
+input,
+textarea,
+select,
+[tabindex]:not([tabindex="-1"]) {
+  &:focus-visible {
+    outline: 3px solid var(--secondary);
+    outline-offset: 3px;
+    border-radius: 0.5rem;
+  }
+}
+
+.page-title a,
+.folder-container div > a,
+.folder-container div > button span,
+.explorer-content ul li > a,
+.search .search-button > p,
+.darkmode svg,
+.readermode svg {
+  color: var(--darkgray);
+}
+
+.search .search-button,
+.graph > .graph-outer > .global-graph-icon,
+.darkmode,
+.readermode,
+button.mobile-explorer,
+button.desktop-explorer {
+  transition:
+    color 200ms ease,
+    background-color 200ms ease,
+    border-color 200ms ease;
+}
+
+.search .search-button:hover,
+.search .search-button:focus-visible,
+.graph > .graph-outer > .global-graph-icon:hover,
+.graph > .graph-outer > .global-graph-icon:focus-visible,
+.darkmode:hover,
+.darkmode:focus-visible,
+.readermode:hover,
+.readermode:focus-visible,
+button.mobile-explorer:hover,
+button.mobile-explorer:focus-visible,
+button.desktop-explorer:hover,
+button.desktop-explorer:focus-visible {
+  background-color: var(--highlight);
+  color: var(--secondary);
+}
+
+.search .search-button:hover > p,
+.search .search-button:focus-visible > p,
+.folder-container div > a:hover,
+.folder-container div > a:focus-visible,
+.folder-container div > button:hover span,
+.folder-container div > button:focus-visible span,
+.explorer-content ul li > a:hover,
+.explorer-content ul li > a:focus-visible,
+.explorer-content ul li > a.active,
+.page-title a:hover,
+.page-title a:focus-visible {
+  color: var(--secondary);
+}
+
+.search .search-container > .search-space > input:focus-visible {
+  border-color: var(--secondary);
+  box-shadow: 0 0 0 3px var(--highlight);
+  outline: none;
+}
+
+.search .search-container > .search-space > .search-layout .result-card:hover,
+.search .search-container > .search-space > .search-layout .result-card:focus,
+.search .search-container > .search-space > .search-layout .result-card.focus {
+  background: var(--highlight);
+}
+
+.search .search-container > .search-space > .search-layout .highlight {
+  background: var(--textHighlight);
+}
+
+.explorer-content ul li > a {
+  opacity: 1;
 }

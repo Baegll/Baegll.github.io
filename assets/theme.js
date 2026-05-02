@@ -9,8 +9,7 @@
 
   // Determine initial theme
   const stored = localStorage.getItem("theme");
-  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-  if (stored === "dark" || (!stored && prefersDark)) {
+  if (stored !== "light") {
     document.documentElement.classList.add("dark");
   }
 
@@ -29,10 +28,14 @@
       --t-primary: ${l.primary};
       --t-secondary: ${l.secondary};
       --t-cta: ${l.cta};
+      --t-cta-hover: ${l.ctaHover};
+      --t-cta-text: ${l.ctaText};
       --t-surface: ${l.background};
       --t-text: ${l.text};
       --t-border: ${l.border};
       --t-muted: ${l.muted};
+      --t-highlight: ${l.highlight};
+      --t-text-highlight: ${l.textHighlight};
       --t-font-heading: ${t.fonts.heading}, sans-serif;
       --t-font-body: ${t.fonts.body}, sans-serif;
       --t-font-code: ${t.fonts.code}, monospace;
@@ -41,10 +44,14 @@
       --t-primary: ${d.primary};
       --t-secondary: ${d.secondary};
       --t-cta: ${d.cta};
+      --t-cta-hover: ${d.ctaHover};
+      --t-cta-text: ${d.ctaText};
       --t-surface: ${d.background};
       --t-text: ${d.text};
       --t-border: ${d.border};
       --t-muted: ${d.muted};
+      --t-highlight: ${d.highlight};
+      --t-text-highlight: ${d.textHighlight};
     }
   `;
   document.head.appendChild(style);
