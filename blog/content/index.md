@@ -15,6 +15,7 @@ The blog index is the canonical `/blog/` landing page. If you're new here, start
 
 ## Latest Posts
 
+- [[building-texas-renfecht-in-a-weekend|Building Texas RenFecht in a Weekend]]
 - [[context-management|Context Management: Getting Better Responses from AI]]
 - [[generative-ai-and-its-speed|Generative AI and Its Speed]]
 - [[burnout-and-its-consequences|Burnout and Its Consequences]]

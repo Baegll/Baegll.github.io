@@ -18,6 +18,7 @@ export const sharedPageComponents: SharedLayout = {
     links: {
       Home: `https://${tokens.site.baseUrl}`,
       Projects: `https://${tokens.site.baseUrl}/projects`,
+      Privacy: `https://${tokens.site.baseUrl}/privacy`,
       GitHub: tokens.site.github,
     },
   }),

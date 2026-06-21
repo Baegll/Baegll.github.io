@@ -15,8 +15,10 @@ npx quartz build -o "$SCRIPT_DIR/_site/blog" 2>&1 | tail -3
 echo "Copying static files..."
 cd "$SCRIPT_DIR"
 mkdir -p _site/projects
+mkdir -p _site/privacy
 cp index.html _site/
 cp projects/index.html _site/projects/
+cp privacy/index.html _site/privacy/
 cp design-tokens.json _site/
 cp -r assets _site/
 

@@ -42,12 +42,15 @@ jobs:
           cp -r assets _site/
           mkdir -p _site/projects
           cp projects/index.html _site/projects/
+          mkdir -p _site/privacy
+          cp privacy/index.html _site/privacy/
 
       - name: Verify Pages output
         run: |
           test -f _site/index.html
           test -f _site/blog/index.html
           test -f _site/projects/index.html
+          test -f _site/privacy/index.html
           find _site -maxdepth 2 -type f | sort
 
       - uses: actions/upload-pages-artifact@v3
