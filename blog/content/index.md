@@ -9,15 +9,15 @@ The blog index is the canonical `/blog/` landing page. If you're new here, start
 
 ## Start Here
 
+- [[ai-should-review-meaning-not-syntax|AI Should Review Meaning, Not Syntax]]
 - [[context-management|Context Management: Getting Better Responses from AI]]
 - [[tournament-design-and-incentives|Tournament Design and Incentives]]
 - [[obsidian-for-note-taking|Obsidian for Note Taking]]
 
 ## Latest Posts
 
-- [[building-texas-renfecht-in-a-weekend|Building Texas RenFecht in a Weekend]]
+- [[ai-should-review-meaning-not-syntax|AI Should Review Meaning, Not Syntax]]
 - [[context-management|Context Management: Getting Better Responses from AI]]
-- [[generative-ai-and-its-speed|Generative AI and Its Speed]]
 - [[burnout-and-its-consequences|Burnout and Its Consequences]]
 - [[tournament-design-and-incentives|Tournament Design and Incentives]]
 - [[obsidian-for-note-taking|Obsidian for Note Taking]]
