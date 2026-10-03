@@ -19,6 +19,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
@@ -31,6 +33,7 @@ jobs:
       - name: Install and build Astro
         run: |
           npm ci
+          node tools/locknight/scripts/integrate.mjs .
           npx astro build --outDir _site
 
       - name: Verify Pages output
@@ -38,6 +41,8 @@ jobs:
           test -f _site/index.html
           test -f _site/blog/index.html
           test -f _site/projects/index.html
+          test -f _site/projects/locknight/index.html
+          test -f _site/projects/locknight/preferences/index.html
           test -f _site/privacy/index.html
           find _site -maxdepth 2 -type f | sort
 

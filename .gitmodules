@@ -1,0 +1,4 @@
+[submodule "tools/locknight"]
+	path = tools/locknight
+	url = https://github.com/Baegll/locknight.git
+	branch = main
