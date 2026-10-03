@@ -1,0 +1,35 @@
+---
+import readingTime from "reading-time"
+import config from "../config"
+import { i18n } from "../../quartz/i18n"
+import { getDate } from "../../quartz/components/Date"
+import type { QuartzPluginData } from "../../quartz/plugins/vfile"
+import DateTime from "./DateTime.astro"
+
+interface Props {
+  fileData: QuartzPluginData
+}
+
+const options = {
+  showReadingTime: true,
+  showComma: true,
+}
+
+const { fileData } = Astro.props
+const cfg = config.configuration
+const text = fileData.text
+const displayedTime = text
+  ? i18n(cfg.locale).components.contentMeta.readingTime({
+      minutes: Math.ceil(readingTime(text).minutes),
+    })
+  : undefined
+---
+
+{
+  text && (
+    <p show-comma={String(options.showComma)} class="content-meta">
+      {fileData.dates && <DateTime date={getDate(cfg, fileData)!} locale={cfg.locale} />}
+      {options.showReadingTime && <span>{displayedTime}</span>}
+    </p>
+  )
+}

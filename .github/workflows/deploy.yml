@@ -25,25 +25,13 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version-file: .node-version
           cache: npm
-          cache-dependency-path: blog/package-lock.json
 
-      - name: Install and build Quartz
-        working-directory: blog
+      - name: Install and build Astro
         run: |
           npm ci
-          node ./quartz/bootstrap-cli.mjs build -o ../_site/blog
-
-      - name: Copy static files
-        run: |
-          cp index.html _site/
-          cp design-tokens.json _site/
-          cp -r assets _site/
-          mkdir -p _site/projects
-          cp projects/index.html _site/projects/
-          mkdir -p _site/privacy
-          cp privacy/index.html _site/privacy/
+          npx astro build --outDir _site
 
       - name: Verify Pages output
         run: |

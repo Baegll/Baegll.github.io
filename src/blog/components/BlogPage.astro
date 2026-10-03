@@ -1,0 +1,143 @@
+---
+import config from "../config"
+import type { QuartzPluginData } from "../../quartz/plugins/vfile"
+import type { StaticResources } from "../../quartz/util/resources"
+import { overflowListIds } from "../resources"
+import Head from "./Head.astro"
+import Script from "./Script.astro"
+import PageTitle from "./PageTitle.astro"
+import Search from "./Search.astro"
+import Darkmode from "./Darkmode.astro"
+import ReaderMode from "./ReaderMode.astro"
+import Explorer from "./Explorer.astro"
+import Breadcrumbs from "./Breadcrumbs.astro"
+import ArticleTitle from "./ArticleTitle.astro"
+import ContentMeta from "./ContentMeta.astro"
+import TagList from "./TagList.astro"
+import RecentNotes from "./RecentNotes.astro"
+import Graph from "./Graph.astro"
+import TableOfContents from "./TableOfContents.astro"
+import Backlinks from "./Backlinks.astro"
+import Footer from "./Footer.astro"
+
+/**
+ * Page shell shared by every blog page; the page body goes in the default slot.
+ * - "content": a note (sidebars with explorer, graph, table of contents, backlinks)
+ * - "list": a tag listing
+ * - "404": the bare not-found page
+ */
+interface Props {
+  layout: "content" | "list" | "404"
+  fileData: QuartzPluginData
+  allFiles: QuartzPluginData[]
+  resources: StaticResources
+}
+
+const { layout, fileData, allFiles, resources } = Astro.props
+const cfg = config.configuration
+const slug = fileData.slug!
+const lang = fileData.frontmatter?.lang ?? cfg.locale?.split("-")[0] ?? "en"
+const direction = "ltr"
+const flexItem = (grow: boolean) =>
+  `flex-grow: ${grow ? 1 : 0}; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;`
+---
+
+<html lang={lang} dir={direction}>
+  <Head fileData={fileData} resources={resources} />
+  <body data-slug={slug}>
+    <div id="quartz-root" class="page">
+      <div id="quartz-body">
+        <div class="left sidebar">
+          {
+            layout !== "404" && (
+              <Fragment>
+                <PageTitle fileData={fileData} />
+                <div class="spacer mobile-only" />
+                <div
+                  class="flex-component"
+                  style="flex-direction: row; flex-wrap: nowrap; gap: 1rem;"
+                >
+                  <div style={flexItem(true)}>
+                    <Search />
+                  </div>
+                  <div style={flexItem(false)}>
+                    <Darkmode />
+                  </div>
+                  {layout === "content" && (
+                    <div style={flexItem(false)}>
+                      <ReaderMode />
+                    </div>
+                  )}
+                </div>
+                <Explorer
+                  id="explorer-0"
+                  listId={
+                    layout === "content"
+                      ? overflowListIds.contentExplorer
+                      : overflowListIds.listExplorer
+                  }
+                />
+              </Fragment>
+            )
+          }
+        </div>
+        <div class="center">
+          <div class="page-header">
+            <div class="popover-hint">
+              {
+                layout === "content" && (
+                  <Fragment>
+                    {slug !== "index" && <Breadcrumbs fileData={fileData} allFiles={allFiles} />}
+                    <ArticleTitle fileData={fileData} />
+                    <ContentMeta fileData={fileData} />
+                    <TagList fileData={fileData} />
+                  </Fragment>
+                )
+              }
+              {
+                layout === "list" && (
+                  <Fragment>
+                    <Breadcrumbs fileData={fileData} allFiles={allFiles} />
+                    <ArticleTitle fileData={fileData} />
+                    <ContentMeta fileData={fileData} />
+                  </Fragment>
+                )
+              }
+            </div>
+          </div>
+          <slot />
+          <hr />
+          <div class="page-footer">
+            {slug === "index" && <RecentNotes fileData={fileData} allFiles={allFiles} limit={5} />}
+          </div>
+        </div>
+        <div class="right sidebar">
+          {
+            layout === "content" && (
+              <Fragment>
+                <Graph />
+                <TableOfContents
+                  fileData={fileData}
+                  id="toc-0"
+                  listId={overflowListIds.toc}
+                  displayClass="desktop-only"
+                />
+                <Backlinks
+                  fileData={fileData}
+                  allFiles={allFiles}
+                  listId={overflowListIds.backlinks}
+                />
+              </Fragment>
+            )
+          }
+        </div>
+        <Footer />
+      </div>
+    </div>
+  </body>
+  {
+    resources.js
+      .filter((resource) => resource.loadTime === "afterDOMReady")
+      .map((resource) => <Script resource={resource} />)
+  }
+</html>

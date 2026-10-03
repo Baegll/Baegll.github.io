@@ -1,0 +1,57 @@
+---
+import config from "../config"
+import { i18n } from "../../quartz/i18n"
+import type { QuartzPluginData } from "../../quartz/plugins/vfile"
+import OverflowList from "./OverflowList.astro"
+
+interface Props {
+  fileData: QuartzPluginData
+  id: string
+  listId: string
+  displayClass?: string
+}
+
+const { fileData, id, listId, displayClass } = Astro.props
+const cfg = config.configuration
+---
+
+{
+  fileData.toc && (
+    <div class={["toc", displayClass].filter(Boolean).join(" ")}>
+      <button
+        type="button"
+        class={fileData.collapseToc ? "collapsed toc-header" : "toc-header"}
+        aria-controls={id}
+        aria-expanded={fileData.collapseToc ? "false" : "true"}
+      >
+        <h3>{i18n(cfg.locale).components.tableOfContents.title}</h3>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="fold"
+        >
+          <polyline points="6 9 12 15 18 9" />
+        </svg>
+      </button>
+      <OverflowList
+        id={listId}
+        class={fileData.collapseToc ? "collapsed toc-content" : "toc-content"}
+      >
+        {fileData.toc.map((tocEntry) => (
+          <li class={`depth-${tocEntry.depth}`}>
+            <a href={`#${tocEntry.slug}`} data-for={tocEntry.slug}>
+              {tocEntry.text}
+            </a>
+          </li>
+        ))}
+      </OverflowList>
+    </div>
+  )
+}

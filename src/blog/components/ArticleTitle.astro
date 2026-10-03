@@ -1,0 +1,11 @@
+---
+import type { QuartzPluginData } from "../../quartz/plugins/vfile"
+
+interface Props {
+  fileData: QuartzPluginData
+}
+
+const title = Astro.props.fileData.frontmatter?.title
+---
+
+{title && <h1 class="article-title">{title}</h1>}

@@ -1,0 +1,19 @@
+---
+import type { JSResource } from "../../quartz/util/resources"
+
+interface Props {
+  resource: JSResource
+}
+
+// every script is SPA-persisted, as Quartz rendered them
+const { resource } = Astro.props
+const type = resource.moduleType ?? "application/javascript"
+---
+
+{
+  resource.contentType === "external" ? (
+    <script is:inline src={resource.src} type={type} data-persist="true" />
+  ) : (
+    <script is:inline type={type} data-persist="true" set:html={resource.script} />
+  )
+}

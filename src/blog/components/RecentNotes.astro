@@ -1,0 +1,72 @@
+---
+import config from "../config"
+import { i18n } from "../../quartz/i18n"
+import { type FullSlug, resolveRelative } from "../../quartz/util/path"
+import { getDate } from "../../quartz/components/Date"
+import { byDateAndAlphabetical } from "../../quartz/components/PageList"
+import type { QuartzPluginData } from "../../quartz/plugins/vfile"
+import DateTime from "./DateTime.astro"
+
+interface Props {
+  fileData: QuartzPluginData
+  allFiles: QuartzPluginData[]
+  limit: number
+}
+
+const { fileData, allFiles, limit } = Astro.props
+const cfg = config.configuration
+const opts = {
+  title: undefined as string | undefined,
+  limit,
+  linkToMore: false as const,
+  showTags: true,
+  filter: (_f: QuartzPluginData) => true,
+  sort: byDateAndAlphabetical(cfg),
+}
+const pages = allFiles.filter(opts.filter).sort(opts.sort)
+---
+
+<div class="recent-notes">
+  <h3>{opts.title ?? i18n(cfg.locale).components.recentNotes.title}</h3>
+  <ul class="recent-ul">
+    {
+      pages.slice(0, opts.limit).map((page) => {
+        const title = page.frontmatter?.title ?? i18n(cfg.locale).propertyDefaults.title
+        const tags = page.frontmatter?.tags ?? []
+
+        return (
+          <li class="recent-li">
+            <div class="section">
+              <div class="desc">
+                <h3>
+                  <a href={resolveRelative(fileData.slug!, page.slug!)} class="internal">
+                    {title}
+                  </a>
+                </h3>
+              </div>
+              {page.dates && (
+                <p class="meta">
+                  <DateTime date={getDate(cfg, page)!} locale={cfg.locale} />
+                </p>
+              )}
+              {opts.showTags && (
+                <ul class="tags">
+                  {tags.map((tag) => (
+                    <li>
+                      <a
+                        class="internal tag-link"
+                        href={resolveRelative(fileData.slug!, `tags/${tag}` as FullSlug)}
+                      >
+                        {tag}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </li>
+        )
+      })
+    }
+  </ul>
+</div>

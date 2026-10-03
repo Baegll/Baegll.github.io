@@ -1,0 +1,31 @@
+---
+import config from "../../blog/config"
+import { getBlogContent } from "../../blog/content"
+import { pageResources, transformerResources } from "../../blog/resources"
+import BlogPage from "../../blog/components/BlogPage.astro"
+import NotFound from "../../blog/components/NotFound.astro"
+import { i18n } from "../../quartz/i18n"
+import type { FullSlug } from "../../quartz/util/path"
+import type { QuartzPluginData } from "../../quartz/plugins/vfile"
+
+const cfg = config.configuration
+const { ctx } = await getBlogContent()
+const url = new URL(`https://${cfg.baseUrl ?? "example.com"}`)
+const path = url.pathname as FullSlug
+const notFound = i18n(cfg.locale).pages.error.title
+const fileData: QuartzPluginData = {
+  slug: "404" as FullSlug,
+  text: notFound,
+  description: notFound,
+  frontmatter: { title: notFound, tags: [] },
+}
+---
+
+<BlogPage
+  layout="404"
+  fileData={fileData}
+  allFiles={[]}
+  resources={pageResources(path, transformerResources(ctx))}
+>
+  <NotFound />
+</BlogPage>

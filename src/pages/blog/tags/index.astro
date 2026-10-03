@@ -1,0 +1,8 @@
+---
+import TagPage from "../../../blog/components/TagPage.astro"
+import { getTagPages } from "../../../blog/tags"
+
+const page = (await getTagPages()).find((page) => page.tag === "index")!
+---
+
+<TagPage fileData={page.fileData} tree={page.tree} />

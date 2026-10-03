@@ -1,0 +1,25 @@
+---
+import type { Root } from "hast"
+import { getBlogContent } from "../content"
+import { resourcesForSlug } from "../resources"
+import type { QuartzPluginData } from "../../quartz/plugins/vfile"
+import BlogPage from "./BlogPage.astro"
+import TagContent from "./TagContent.astro"
+
+interface Props {
+  fileData: QuartzPluginData
+  tree: Root
+}
+
+const { fileData, tree } = Astro.props
+const { ctx, allFiles } = await getBlogContent()
+---
+
+<BlogPage
+  layout="list"
+  fileData={fileData}
+  allFiles={allFiles}
+  resources={resourcesForSlug(fileData.slug!, ctx)}
+>
+  <TagContent fileData={fileData} tree={tree} allFiles={allFiles} />
+</BlogPage>

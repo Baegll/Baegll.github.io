@@ -1,0 +1,28 @@
+---
+import config from "../config"
+import { getBlogContent } from "../content"
+import { renderContent } from "../render"
+import { resourcesForSlug } from "../resources"
+import type { ProcessedContent } from "../../quartz/plugins/vfile"
+import BlogPage from "./BlogPage.astro"
+
+interface Props {
+  page: ProcessedContent
+}
+
+const [tree, file] = Astro.props.page
+const { ctx, allFiles } = await getBlogContent()
+const fileData = file.data
+const html = renderContent(config.configuration, fileData, tree, allFiles)
+const classes: string[] = fileData.frontmatter?.cssclasses ?? []
+const classString = ["popover-hint", ...classes].join(" ")
+---
+
+<BlogPage
+  layout="content"
+  fileData={fileData}
+  allFiles={allFiles}
+  resources={resourcesForSlug(fileData.slug!, ctx)}
+>
+  <article class={classString} set:html={html} />
+</BlogPage>

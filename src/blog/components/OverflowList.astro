@@ -1,0 +1,12 @@
+---
+import type { HTMLAttributes } from "astro/types"
+
+type Props = HTMLAttributes<"ul"> & { id: string }
+
+const { class: className, id, ...props } = Astro.props
+---
+
+<ul {...props} class={[className, "overflow"].filter(Boolean).join(" ")} id={id}>
+  <slot />
+  <li class="overflow-end"></li>
+</ul>

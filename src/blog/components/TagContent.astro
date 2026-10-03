@@ -1,0 +1,116 @@
+---
+import type { Root } from "hast"
+import config from "../config"
+import { i18n } from "../../quartz/i18n"
+import {
+  type FullSlug,
+  getAllSegmentPrefixes,
+  resolveRelative,
+  simplifySlug,
+} from "../../quartz/util/path"
+import { htmlToString } from "../../quartz/util/jsx"
+import type { QuartzPluginData } from "../../quartz/plugins/vfile"
+import PageList from "./PageList.astro"
+
+interface Props {
+  fileData: QuartzPluginData
+  tree: Root
+  allFiles: QuartzPluginData[]
+}
+
+const options = {
+  numPages: 10,
+}
+
+const { fileData, tree, allFiles } = Astro.props
+const cfg = config.configuration
+const slug = fileData.slug
+
+if (!(slug?.startsWith("tags/") || slug === "tags")) {
+  throw new Error(`Component "TagContent" tried to render a non-tag page: ${slug}`)
+}
+
+const tag = simplifySlug(slug.slice("tags/".length) as FullSlug)
+const allPagesWithTag = (tag: string) =>
+  allFiles.filter((file) =>
+    (file.frontmatter?.tags ?? []).flatMap(getAllSegmentPrefixes).includes(tag),
+  )
+
+const content =
+  tree.children.length === 0
+    ? (fileData.description ?? "")
+    : htmlToString(fileData.filePath!, tree)
+const cssClasses: string[] = fileData.frontmatter?.cssclasses ?? []
+const classes = cssClasses.join(" ")
+
+const tags =
+  tag === "/"
+    ? [
+        ...new Set(
+          allFiles.flatMap((data) => data.frontmatter?.tags ?? []).flatMap(getAllSegmentPrefixes),
+        ),
+      ].sort((a, b) => a.localeCompare(b))
+    : []
+
+const tagListings = tags.map((tag) => {
+  const pages = allPagesWithTag(tag)
+  const contentPage = allFiles.filter((file) => file.slug === `tags/${tag}`).at(0)
+  const root = contentPage?.htmlAst
+  const content =
+    !root || root?.children.length === 0
+      ? contentPage?.description
+      : htmlToString(contentPage!.filePath!, root)
+  const tagListingPage = `/tags/${tag}` as FullSlug
+  return { tag, pages, content, href: resolveRelative(fileData.slug!, tagListingPage) }
+})
+const pagesWithTag = tag === "/" ? [] : allPagesWithTag(tag)
+---
+
+{
+  tag === "/" ? (
+    <div class="popover-hint">
+      <article class={classes}>
+        <p set:html={content} />
+      </article>
+      <p>{i18n(cfg.locale).pages.tagContent.totalTags({ count: tags.length })}</p>
+      <div>
+        {tagListings.map(({ tag, pages, content, href }) => (
+          <div>
+            <h2>
+              <a class="internal tag-link" href={href}>
+                {tag}
+              </a>
+            </h2>
+            {content && <p set:html={content} />}
+            <div class="page-listing">
+              <p>
+                {i18n(cfg.locale).pages.tagContent.itemsUnderTag({ count: pages.length })}
+                {pages.length > options.numPages && (
+                  <Fragment>
+                    {" "}
+                    <span>
+                      {i18n(cfg.locale).pages.tagContent.showingFirst({
+                        count: options.numPages,
+                      })}
+                    </span>
+                  </Fragment>
+                )}
+              </p>
+              <PageList fileData={fileData} allFiles={pages} limit={options.numPages} />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  ) : (
+    <div class="popover-hint">
+      <article class={classes} set:html={content} />
+      <div class="page-listing">
+        <p>{i18n(cfg.locale).pages.tagContent.itemsUnderTag({ count: pagesWithTag.length })}</p>
+        <div>
+          <PageList fileData={fileData} allFiles={pagesWithTag} />
+        </div>
+      </div>
+    </div>
+  )
+}

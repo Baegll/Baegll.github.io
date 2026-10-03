@@ -1,0 +1,20 @@
+---
+import type { GetStaticPaths } from "astro"
+import TagPage from "../../../blog/components/TagPage.astro"
+import { getTagPages, type TagPageData } from "../../../blog/tags"
+
+export const getStaticPaths = (async () => {
+  const pages = await getTagPages()
+  return pages
+    .filter((page) => page.tag !== "index")
+    .map((page) => ({ params: { tag: page.tag }, props: { page } }))
+}) satisfies GetStaticPaths
+
+interface Props {
+  page: TagPageData
+}
+
+const { page } = Astro.props
+---
+
+<TagPage fileData={page.fileData} tree={page.tree} />

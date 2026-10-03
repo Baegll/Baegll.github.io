@@ -1,0 +1,13 @@
+---
+import { formatDate } from "../../quartz/components/Date"
+import type { ValidLocale } from "../../quartz/i18n"
+
+interface Props {
+  date: Date
+  locale?: ValidLocale
+}
+
+const { date, locale } = Astro.props
+---
+
+<time datetime={date.toISOString()}>{formatDate(date, locale)}</time>

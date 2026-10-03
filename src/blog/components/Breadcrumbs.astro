@@ -1,0 +1,64 @@
+---
+import { type FullSlug, type SimpleSlug, resolveRelative, simplifySlug } from "../../quartz/util/path"
+import { trieFromAllFiles } from "../../quartz/util/ctx"
+import type { QuartzPluginData } from "../../quartz/plugins/vfile"
+
+interface Props {
+  fileData: QuartzPluginData
+  allFiles: QuartzPluginData[]
+}
+
+type CrumbData = {
+  displayName: string
+  path: string
+}
+
+const options = {
+  spacerSymbol: "❯",
+  rootName: "Home",
+  showCurrentPage: true,
+}
+
+function formatCrumb(displayName: string, baseSlug: FullSlug, currentSlug: SimpleSlug): CrumbData {
+  return {
+    displayName: displayName.replaceAll("-", " "),
+    path: resolveRelative(baseSlug, currentSlug),
+  }
+}
+
+const { fileData, allFiles } = Astro.props
+const trie = trieFromAllFiles(allFiles)
+const slugParts = fileData.slug!.split("/")
+const pathNodes = trie.ancestryChain(slugParts)
+
+const crumbs: CrumbData[] = (pathNodes ?? []).map((node, idx) => {
+  const crumb = formatCrumb(node.displayName, fileData.slug!, simplifySlug(node.slug))
+  if (idx === 0) {
+    crumb.displayName = options.rootName
+  }
+
+  // For last node (current page), set empty path
+  if (idx === pathNodes!.length - 1) {
+    crumb.path = ""
+  }
+
+  return crumb
+})
+
+if (!options.showCurrentPage) {
+  crumbs.pop()
+}
+---
+
+{
+  pathNodes && (
+    <nav class="breadcrumb-container" aria-label="breadcrumbs">
+      {crumbs.map((crumb, index) => (
+        <div class="breadcrumb-element">
+          <a href={crumb.path}>{crumb.displayName}</a>
+          {index !== crumbs.length - 1 && <p>{` ${options.spacerSymbol} `}</p>}
+        </div>
+      ))}
+    </nav>
+  )
+}

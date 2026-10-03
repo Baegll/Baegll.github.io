@@ -1,0 +1,22 @@
+---
+import type { GetStaticPaths } from "astro"
+import ContentPage from "../../blog/components/ContentPage.astro"
+import { getBlogContent } from "../../blog/content"
+import type { ProcessedContent } from "../../quartz/plugins/vfile"
+
+export const getStaticPaths = (async () => {
+  const { content } = await getBlogContent()
+  return content
+    // tag listings own tags/*; a tags/<tag>.md only supplies that listing's description
+    .filter(([_tree, file]) => file.data.slug !== "index" && !file.data.slug!.startsWith("tags/"))
+    .map((page) => ({ params: { slug: page[1].data.slug! }, props: { page } }))
+}) satisfies GetStaticPaths
+
+interface Props {
+  page: ProcessedContent
+}
+
+const { page } = Astro.props
+---
+
+<ContentPage page={page} />

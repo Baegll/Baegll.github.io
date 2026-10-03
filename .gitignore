@@ -1,4 +1,6 @@
 _site/
+dist/
+.astro/
 node_modules/
 .DS_Store
 *.swp
@@ -12,3 +14,7 @@ node_modules/
 .cursorrules/
 .kiro/
 design-system/
+
+# Obsidian vault files that never get published
+blog/content/.obsidian
+blog/content/private/

@@ -1,0 +1,10 @@
+---
+import ContentPage from "../../blog/components/ContentPage.astro"
+import { getPage } from "../../blog/content"
+import type { FullSlug } from "../../quartz/util/path"
+
+const page = await getPage("index" as FullSlug)
+if (!page) throw new Error("blog/content/index.md is missing")
+---
+
+<ContentPage page={page} />
