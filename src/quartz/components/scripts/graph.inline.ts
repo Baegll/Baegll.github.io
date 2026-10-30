@@ -581,11 +581,16 @@ document.addEventListener("nav", async (e: CustomEventMap["nav"]) => {
     cleanupLocalGraphs()
     const localGraphContainers = document.getElementsByClassName("graph-container")
     for (const container of localGraphContainers) {
+      if (!(container as HTMLElement).offsetWidth) continue
       localGraphCleanups.push(await renderGraph(container as HTMLElement, slug))
     }
   }
 
   await renderLocalGraph()
+  const connections = document.querySelector<HTMLDetailsElement>(".blog-connections")
+  const handleDisclosure = () => { void renderLocalGraph() }
+  connections?.addEventListener("toggle", handleDisclosure)
+  window.addCleanup(() => connections?.removeEventListener("toggle", handleDisclosure))
   const handleThemeChange = () => {
     void renderLocalGraph()
   }

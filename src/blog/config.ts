@@ -13,19 +13,11 @@ import tokens from "../../design-tokens.json"
 /** Directory (relative to the repo root) holding the blog's markdown. */
 export const CONTENT_DIR = "blog/content"
 
-/** Footer links shown on every blog page. */
-export const footerLinks: Record<string, string> = {
-  Home: `https://${tokens.site.baseUrl}`,
-  Projects: `https://${tokens.site.baseUrl}/projects`,
-  Privacy: `https://${tokens.site.baseUrl}/privacy`,
-  GitHub: tokens.site.github,
-}
-
 const config: QuartzConfig = {
   configuration: {
     pageTitle: tokens.site.blogTitle,
     pageTitleSuffix: "",
-    enableSPA: true,
+    enableSPA: false,
     enablePopovers: true,
     analytics: null,
     locale: "en-US",

@@ -1,0 +1,33 @@
+---
+import { getBlogContent } from "../blog/content"
+interface Props { limit?: number }
+const { limit } = Astro.props
+const { allFiles } = await getBlogContent()
+const posts = allFiles.filter(file => file.slug !== "index")
+  .sort((a, b) => (b.dates?.created?.getTime() ?? 0) - (a.dates?.created?.getTime() ?? 0))
+  .slice(0, limit)
+---
+<div class="writing-list">
+  {posts.map(post => (
+    <a class="writing-row" href={`/blog/${post.slug}`}>
+      <div>
+        <h3>{post.frontmatter?.title}</h3>
+        <p>{post.frontmatter?.description ?? post.description}</p>
+      </div>
+      {post.dates?.created && <time datetime={post.dates.created.toISOString()}>{post.dates.created.toLocaleDateString("en-US", { month: "short", year: "numeric", timeZone: "UTC" })}</time>}
+      <span class="writing-arrow" aria-hidden="true">→</span>
+    </a>
+  ))}
+</div>
+<style>
+  .writing-row { display: grid; grid-template-columns: 1fr auto 16px; align-items: baseline; gap: 24px; border-bottom: 1px solid var(--t-border); padding: 28px 0; text-decoration: none; color: var(--t-primary); background: none; }
+  h3 { margin: 0 0 8px; color: var(--t-primary); font: 600 20px/1.4 var(--t-font-heading); text-wrap: balance; transition: color 150ms; }
+  p { margin: 0; max-width: 65ch; color: var(--t-muted); font: 400 15px/1.7 var(--t-font-body); text-wrap: pretty; }
+  time { color: var(--t-muted); font: 400 12px/1.5 var(--t-font-body); white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .writing-arrow { color: var(--t-muted); transition: color 150ms, transform 150ms; }
+  .writing-row:hover h3, .writing-row:focus-visible h3 { color: var(--t-cta); }
+  .writing-row:hover .writing-arrow { color: var(--t-cta); transform: translateX(3px); }
+  .writing-row:focus-visible { outline: 2px solid var(--t-cta); outline-offset: 4px; }
+  @media (max-width: 640px) { .writing-row { grid-template-columns: 1fr auto; gap: 12px; } time { grid-column: 1; grid-row: 2; } .writing-arrow { grid-column: 2; grid-row: 1; } }
+  @media (prefers-reduced-motion: reduce) { h3, .writing-arrow { transition: none; } }
+</style>

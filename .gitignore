@@ -2,6 +2,7 @@ _site/
 dist/
 .astro/
 node_modules/
+.tmp/
 .DS_Store
 *.swp
 *.swo

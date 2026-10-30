@@ -1,14 +1,13 @@
 ---
 import Portfolio from "../layouts/Portfolio.astro"
+import WritingList from "../components/WritingList.astro"
 ---
 
 <Portfolio
   title="Natalie Johanek - SDE2"
   description="Natalie Johanek - SDE2 building distributed systems. Focused on low-latency APIs, developer tooling, and system observability."
-  page="home"
-  stripPath="/ index"
 >
-  <div class="page-section active" id="page-home">
+  <div class="home-section">
     <div class="hero">
       <div>
         <div style="margin-bottom:32px">
@@ -16,11 +15,11 @@ import Portfolio from "../layouts/Portfolio.astro"
         </div>
         <h1 class="hero-name">
           Natalie<br>
-          <span class="accent">Johanek</span><span style="color:var(--t-cta);font-family:var(--t-font-code,'IBM Plex Mono',monospace);font-size:0.15em;vertical-align:super;letter-spacing:0"></span>
+          <span class="accent">Johanek</span>
         </h1>
       </div>
       <div class="hero-right">
-        <img src="/assets/headshot.jpg" alt="Natalie Johanek" class="hero-photo">
+        <img src="/assets/headshot.jpg" alt="Natalie Johanek" class="hero-photo" width="640" height="800">
         <p class="hero-desc">
           Building distributed systems at Amazon. Focused on low-latency APIs, developer tooling, and system observability.
         </p>
@@ -32,14 +31,6 @@ import Portfolio from "../layouts/Portfolio.astro"
           <a class="btn-outline" href="/#contact">Contact</a>
         </div>
       </div>
-    </div>
-
-    <div class="keyword-strip">
-      <span>Distributed Systems</span>
-      <span><span class="kw-dot"></span>Low-latency APIs</span>
-      <span><span class="kw-dot"></span>Developer Tooling</span>
-      <span><span class="kw-dot"></span>System Observability</span>
-      <span><span class="kw-dot"></span>Customer Experience</span>
     </div>
 
     <div class="info-grid">
@@ -61,44 +52,20 @@ import Portfolio from "../layouts/Portfolio.astro"
       </div>
     </div>
 
-    <div class="section-header">
-      <span class="section-title">Latest Writing</span>
-      <a href="/blog/" class="section-link">All posts -></a>
-    </div>
-    <a href="/blog/context-management" class="blog-row">
-      <div>
-        <div class="blog-title">Context Management: Getting Better Responses from AI</div>
-        <div class="blog-excerpt">Practical techniques for managing context windows when working with large language models.</div>
+    <section class="home-writing" aria-labelledby="writing-title">
+      <div class="section-header">
+        <h2 class="section-title" id="writing-title">Latest writing</h2>
+        <a href="/blog/" class="section-link">All writing →</a>
       </div>
-      <div class="blog-date">Apr 2026</div>
-    </a>
-    <div class="blog-row-wrap">
-      <a href="/blog/tournament-design-and-incentives" class="blog-row">
-        <div>
-          <div class="blog-title">Tournament Design and Incentives</div>
-          <div class="blog-excerpt">Exploring the principles of creating engaging and fair competitive tournaments.</div>
-        </div>
-        <div class="blog-date">Apr 2026</div>
-      </a>
-      <a href="https://github.com/Baegll/HemaScoreCardScripts" class="blog-project" target="_blank" rel="noopener">
-        <span class="blog-project-label">project -></span>
-        <span class="blog-project-name">HEMA Scorecard Scripts</span>
-        <div class="blog-project-tags">
-          <span class="tag">Python</span>
-          <span class="tag">Data Analysis</span>
-          <span class="tag">HEMA</span>
-        </div>
-        <span class="blog-project-arrow">-></span>
-      </a>
-    </div>
+      <WritingList limit={3} />
+    </section>
   </div>
 
-  <div class="page-section" id="page-about">
+  <div class="home-about" id="about">
     <div class="about-grid">
       <div class="about-left">
-        <img src="/assets/headshot.jpg" alt="Natalie Johanek" class="about-photo">
         <p class="about-label">About</p>
-        <h2 class="about-heading">A bit<br>about me.</h2>
+        <h2 class="about-heading">A bit about me.</h2>
         <p class="about-body" style="margin-bottom:16px">
           I'm an SDE2 at Amazon working on distributed systems for last-mile delivery. I build low-latency APIs under strict SLAs, architect data pipelines, and care deeply about developer tooling and system observability.
         </p>
@@ -137,15 +104,15 @@ import Portfolio from "../layouts/Portfolio.astro"
     </div>
   </div>
 
-  <div class="page-section" id="page-contact">
-    <div class="contact-section" style="border-top:none">
+  <div class="home-contact" id="contact">
+    <div class="contact-section">
       <div class="contact-left">
         <p class="contact-label">Get in touch</p>
         <h2 class="contact-headline">Let's work<br>together.</h2>
         <p class="contact-sub">Have a project in mind or just want to chat? Reach out - I'm always happy to connect.</p>
         <a id="email-link" href="mailto:nat.johanek@gmail.com" class="cta-btn">
           <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-          <span id="email-text">Say Hello</span>
+          <span id="email-text">nat.johanek@gmail.com</span>
         </a>
       </div>
       <div class="contact-right">
@@ -168,75 +135,4 @@ import Portfolio from "../layouts/Portfolio.astro"
     </div>
   </div>
 
-  <Fragment slot="after-main">
-    <script is:inline>
-      var currentPage = "home";
-      var pages = ["home", "about", "contact"];
-      var pathMap = { home: "/ index", about: "/#about", contact: "/#contact" };
-
-      function applyPageState(page, updateHash) {
-        if (pages.indexOf(page) === -1) {
-          page = "home";
-        }
-
-        currentPage = page;
-
-        document.querySelectorAll(".page-section").forEach(function(el) {
-          el.classList.remove("active");
-        });
-
-        var target = document.getElementById("page-" + page);
-        if (target) target.classList.add("active");
-
-        document.querySelectorAll(".sidebar-link").forEach(function(el) {
-          var isActive = el.getAttribute("data-page") === page;
-          el.classList.toggle("active", isActive);
-          if (isActive) {
-            el.setAttribute("aria-current", "page");
-          } else {
-            el.removeAttribute("aria-current");
-          }
-        });
-
-        document.querySelectorAll(".mobile-nav a[data-page]").forEach(function(el) {
-          var isActive = el.getAttribute("data-page") === page;
-          el.classList.toggle("active", isActive);
-          if (isActive) {
-            el.setAttribute("aria-current", "page");
-          } else {
-            el.removeAttribute("aria-current");
-          }
-        });
-
-        var strip = document.getElementById("strip-path");
-        if (strip) strip.textContent = pathMap[page] || "/ " + page;
-
-        if (updateHash) {
-          var hash = page === "home" ? "" : "#" + page;
-          history.replaceState(null, "", window.location.pathname + hash);
-        }
-
-        var main = document.getElementById("main");
-        if (main) main.scrollTo({ top: 0 });
-        window.scrollTo({ top: 0 });
-      }
-
-      function syncPageFromLocation() {
-        var page = window.location.hash.replace("#", "") || "home";
-        applyPageState(page, false);
-      }
-
-      document.querySelectorAll("a[data-page]").forEach(function(el) {
-        el.addEventListener("click", function(event) {
-          var href = el.getAttribute("href") || "";
-          if (href.charAt(0) !== "#" && href.indexOf("/#") === -1) return;
-          event.preventDefault();
-          applyPageState(el.getAttribute("data-page") || "home", true);
-        });
-      });
-
-      window.addEventListener("hashchange", syncPageFromLocation);
-      syncPageFromLocation();
-    </script>
-  </Fragment>
 </Portfolio>

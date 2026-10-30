@@ -18,9 +18,17 @@ npm run preview   # serve the build
 
 ## How It Works
 
-`design-tokens.json` is the single source of truth for fonts, colors, and site metadata. Portfolio pages load it at runtime via `public/assets/theme.js`; the blog reads it at build time (`src/blog/config.ts`).
+`design-tokens.json` is the single source of truth for fonts, colors, and site metadata. `ThemeHead.astro` renders the tokens at build time; `public/assets/theme.js` applies one saved theme across the site. `SiteHeader.astro` and `Footer.astro` provide the shared navigation, including on blog articles and project tools. About and Contact are native homepage anchors. `WritingList.astro` builds the homepage and writing index from published Markdown, sorted by publication date.
 
-The blog keeps the look and behavior of the [Quartz v4](https://quartz.jzhao.xyz/) site it was migrated from: the markdown plugins, browser scripts, and styles live in `src/quartz/` (MIT, see `src/quartz/LICENSE.txt`), and the Astro components in `src/blog/` render the pages. Obsidian-style `[[wikilinks]]`, callouts, search, the graph view, backlinks, RSS, sitemap, and social images all work as before.
+The blog uses the [Quartz v4](https://quartz.jzhao.xyz/) Markdown plugins, browser scripts, and styles in `src/quartz/` (MIT, see `src/quartz/LICENSE.txt`), with Astro components in `src/blog/`. Obsidian-style `[[wikilinks]]`, callouts, search, graph view, backlinks, RSS, sitemap, and social images are retained. Navigation uses ordinary page loads throughout; graph and backlinks are available under “Explore connections.”
+
+Run `npm run check` for diagnostics and `npm run build && npm run check:links` to validate internal links, assets, and anchor targets in the generated site.
+
+Three responsive layout studies are at `/mockups/`: wide masthead (`editorial`), sidebar index (`field-notes`), and asymmetric grid (`studio`). All use the shared design tokens, fonts, theme preference, and existing identity; the studies compare layout and composition.
+
+Open navigation follow-ups are tracked in [the website TODO list](docs/TODO.md).
+
+For production-build latency measurements, run `npm run build` then `npm run perf`. The runner records paint timing, layout shifts, blocking time, transfer size, and a theme-feedback probe. See [performance methodology and baselines](docs/performance.md) for before/after results, comparison commands, and the distinction between local lab metrics and real-user Core Web Vitals.
 
 ## Deployment
 

@@ -1,0 +1,233 @@
+---
+import { getBlogContent } from "../../blog/content"
+import ThemeHead from "../../components/ThemeHead.astro"
+import ThemeIcons from "../../components/ThemeIcons.astro"
+import MockupAbout from "../../components/MockupAbout.astro"
+import ProjectTitleGraphic from "../../components/ProjectTitleGraphic.astro"
+export function getStaticPaths() {
+  return ["editorial", "field-notes", "studio"].map(layout => ({ params: { layout } }))
+}
+const layout = Astro.params.layout!
+const isSidebar = layout === "field-notes"
+const names: Record<string, string> = { editorial: "01 / Wide masthead", "field-notes": "02 / Sidebar index", studio: "03 / Asymmetric grid" }
+const { allFiles } = await getBlogContent()
+const posts = allFiles.filter(file => file.slug !== "index").sort((a, b) => (b.dates?.created?.getTime() ?? 0) - (a.dates?.created?.getTime() ?? 0)).slice(0, 3)
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>{names[layout]} — Layout study</title>
+    <link rel="icon" href="/blog/static/icon.png" />
+    <ThemeHead />
+  </head>
+  <body class={layout}>
+    <a class="skip" href="#main">Skip to content</a>
+    <div class="study-bar"><a href="/mockups/">← All layout studies</a><span>{names[layout]}</span><a href="/">Current site ↗</a></div>
+    <div class="site-frame">
+      <header class="masthead">
+        <a class="monogram" href="/">Natalie Johanek<span>.</span></a>
+        <nav aria-label="Primary"><a href="#main">Home</a>{isSidebar && <a href="#about">About</a>}<a href="#work">Projects</a><a href="#writing">Writing</a>{!isSidebar && <a href="#about">About</a>}<a href="#contact">Contact</a></nav>
+        <button class="theme-toggle" type="button" onclick="toggleTheme()" aria-label="Toggle color theme"><ThemeIcons size={18} /></button>
+      </header>
+      <main id="main" tabindex="-1">
+        <section class="cover" aria-labelledby="name">
+          <div class="cover-kicker"><span>SDE2 · Amazon</span><span>Austin, United States</span></div>
+          <h1 id="name">Natalie <span>Johanek<span class="name-dot">.</span></span></h1>
+          <figure class="portrait"><img src="/assets/headshot.jpg" width="640" height="800" alt="Natalie Johanek" /><figcaption>Engineer. Writer. Fencing coach.</figcaption><span class="photo-index" aria-hidden="true">Fig. 01</span></figure>
+          <div class="cover-copy"><p class="lede">Building distributed systems at Amazon.</p><p>Focused on low-latency APIs, developer tooling, and system observability.</p><a class="primary-link" href="#work">View Work <span aria-hidden="true">↗</span></a></div>
+          <div class="cover-margin" aria-hidden="true">Engineering / Writing / Fencing</div>
+        </section>
+        {isSidebar && <MockupAbout number="01" />}
+        <section class="work-section" id="work" aria-labelledby="work-title">
+          <div class="section-heading"><span class="section-index">{isSidebar ? "02" : "01"} / Selected work</span><h2 id="work-title">Projects</h2><a href="/projects/">All projects ↗</a></div>
+          <div class="work-grid">
+            <a class="project hema" href="https://github.com/Baegll/HemaScoreCardScripts"><div class="project-meta"><span>Data / Competition</span><span>↗</span></div><ProjectTitleGraphic project="hema" /><h3>HEMA Scorecard Scripts</h3><p>Scrapers and analysis tools for HEMA tournament data. 837 events, 314,000 exchanges, 34,000 matches.</p><span class="project-foot">Python · Data analysis <span>View source ↗</span></span></a>
+            <a class="project locknight" href="/projects/locknight/"><div class="project-meta"><span>Tools / Games</span><span>↗</span></div><ProjectTitleGraphic project="locknight" /><h3>Locknight</h3><p>6v6 Deadlock drafts, match records, and player ratings.</p><span class="project-foot">Astro · OpenSkill <span>Open the tool ↗</span></span></a>
+          </div>
+        </section>
+        <section class="writing-section" id="writing" aria-labelledby="writing-title"><div class="section-heading"><span class="section-index">{isSidebar ? "03" : "02"} / Notes &amp; essays</span><h2 id="writing-title">Latest writing</h2><a href="/blog/">All writing ↗</a></div><div class="essay-list">{posts.map((post, i) => <a class="essay" href={`/blog/${post.slug}`}><span class="essay-index">0{i + 1}</span><div><h3>{post.frontmatter?.title}</h3><p>{post.frontmatter?.description ?? post.description}</p></div><span class="essay-date">{post.dates?.created?.toLocaleDateString("en-US", { month: "short", year: "numeric", timeZone: "UTC" })}</span><span aria-hidden="true">↗</span></a>)}</div></section>
+        {!isSidebar && <MockupAbout number="03" />}
+        <section class="contact-section" id="contact"><span class="section-index">04 / Get in touch</span><h2>Let's work<br />together.</h2><a class="primary-link" href="mailto:nat.johanek@gmail.com">nat.johanek@gmail.com <span aria-hidden="true">↗</span></a></section>
+      </main>
+      <footer><span>© 2026 Natalie Johanek</span><div><a href="https://github.com/Baegll">GitHub ↗</a><a href="https://www.linkedin.com/in/natlj/">LinkedIn ↗</a><a href="/privacy/">Privacy</a></div><a href="/mockups/">Compare layouts ↑</a></footer>
+    </div>
+  </body>
+</html>
+<style is:global>
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 24px; }
+  body { --paper: var(--t-surface); --ink: var(--t-primary); --muted: var(--t-muted); --line: var(--t-border); --accent: var(--t-cta); margin: 0; color: var(--ink); background: var(--paper); font: 400 15px/1.7 var(--t-font-body); -webkit-font-smoothing: antialiased; }
+  a { color: inherit; text-decoration: none; }
+  a:focus-visible { outline: 3px solid var(--accent); outline-offset: 6px; }
+  h1, h2, h3, p, figure { margin: 0; }
+  h1, h2, h3 { text-wrap: balance; }
+  p { text-wrap: pretty; }
+  a { transition: color 150ms, background-color 150ms; }
+  .skip { position: fixed; top: -100px; left: 20px; z-index: 5; background: var(--paper); padding: 12px; }
+  .skip:focus { top: 10px; }
+  .study-bar { padding: 10px max(24px, calc((100vw - 1200px) / 2)); display: flex; gap: 16px; justify-content: space-between; background: var(--ink); color: var(--paper); font-size: 11px; }
+  .site-frame { max-width: 1200px; margin: auto; padding: 0 40px; }
+  .masthead { display: flex; align-items: center; gap: 32px; padding: 24px 0; border-bottom: 1px solid var(--ink); }
+  .monogram { display: inline-block; font: 700 17px/1.3 var(--t-font-body); white-space: nowrap; margin-right: auto; }
+  .monogram span { color: var(--accent); }
+  .theme-toggle { display: grid; place-items: center; width: 44px; height: 44px; padding: 0; flex-shrink: 0; border: 0; border-radius: 8px; background: none; color: var(--muted); cursor: pointer; }
+  .theme-toggle:hover { color: var(--accent); background: var(--t-highlight); }
+  .theme-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+  .dark .icon-sun { display: block !important; }
+  .dark .icon-moon { display: none; }
+  .masthead-note { font-size: 11px; line-height: 1.4; color: var(--muted); }
+  nav { margin-left: auto; display: flex; gap: 28px; font-size: 13px; }
+  nav a:hover, footer a:hover, .essay:hover h3 { color: var(--accent); }
+  .cover { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 32px 64px; padding: 24px 0 64px; }
+  .cover-kicker { grid-column: 1/-1; display: flex; justify-content: space-between; font-size: 10px; text-transform: uppercase; letter-spacing: .1em; }
+  h1 { grid-column: 1/-1; font: 900 clamp(64px, 10vw, 142px)/.95 var(--t-font-heading); letter-spacing: -.065em; padding: 12px 0; }
+  h1 > span { font-style: normal; color: var(--accent); }
+  .name-dot { color: var(--accent); }
+  .portrait { position: relative; }
+  .portrait img { width: 100%; height: 360px; display: block; object-fit: cover; object-position: center 38%;  }
+  figcaption { margin-top: 10px; font-size: 10px; text-transform: uppercase; letter-spacing: .1em; }
+  .photo-index { position: absolute; top: 12px; left: 12px; background: var(--paper); padding: 2px 8px; font-size: 10px; }
+  .cover-copy { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 24px; }
+  .cover-copy p:not(.lede) { max-width: 42ch; color: var(--muted); }
+  .lede { font: 400 clamp(28px, 3.2vw, 42px)/1.2 var(--t-font-heading); letter-spacing: -.03em; }
+  .primary-link { padding: 12px 20px; border: 0; border-radius: 8px; background: var(--accent); color: var(--t-cta-text); display: inline-flex; gap: 40px; align-items: center; font-weight: 600; }
+  .primary-link span { margin-left: auto; }
+  .primary-link:hover { background: var(--t-cta-hover); }
+  .cover-margin { display: none; }
+  .section-heading { padding: 24px 0; display: grid; grid-template-columns: 1fr auto; align-items: baseline; gap: 12px; border-top: 1px solid var(--ink); }
+  .section-index { font-size: 11px; letter-spacing: .04em; color: var(--muted); }
+  .section-heading .section-index { grid-column: 1/-1; }
+  h2 { font: 700 clamp(32px, 4vw, 52px)/1.12 var(--t-font-heading); letter-spacing: -.035em; }
+  h2 > span { color: var(--accent); }
+  .section-heading > a { font-size: 12px; }
+  .work-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; padding-bottom: 64px; }
+  .project { display: flex; flex-direction: column; padding: 24px; border-radius: 8px; background: color-mix(in srgb, var(--ink) 4%, var(--paper)); border: 1px solid var(--line); }
+  .project:hover { border-color: var(--accent); }
+  .project-meta { display: flex; justify-content: space-between; font-size: 10px; text-transform: uppercase; letter-spacing: .08em; }
+  .project h3 { font: 600 22px/1.2 var(--t-font-heading); margin-bottom: 12px; }
+  .project p { color: var(--muted); font-size: 13px; max-width: 50ch; }
+  .project-foot { margin-top: auto; padding-top: 24px; font-size: 10px; display: flex; justify-content: space-between; gap: 12px; }
+  .project.locknight { background: color-mix(in srgb, var(--ink) 4%, var(--paper)); }
+  .essay { display: grid; grid-template-columns: 28px 1fr auto 16px; gap: 24px; padding: 24px 0; border-bottom: 1px solid var(--line); align-items: baseline; }
+  .essay-index, .essay-date { font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .essay h3 { font: 600 24px/1.25 var(--t-font-heading); }
+  .essay p { font-size: 13px; color: var(--muted); max-width: 65ch; margin-top: 10px; }
+  .about-section { display: grid; grid-template-columns: 1fr 1fr; gap: 20px 64px; margin-top: 64px; padding: 32px 0 64px; border-top: 1px solid var(--ink); }
+  .about-section > .section-index { grid-column: 1/-1; }
+  .about-section p { color: var(--muted); margin-bottom: 16px; }
+  .contact-section { padding: 48px 0 64px; border-top: 1px solid var(--ink); }
+  .contact-section h2 { margin-top: 24px; font-size: clamp(36px, 6vw, 76px); }
+  .contact-section .primary-link { margin-top: 24px; }
+  footer { padding: 24px 0; border-top: 1px solid var(--ink); font-size: 11px; display: flex; justify-content: space-between; gap: 24px; }
+  footer div { display: flex; gap: 20px; }
+
+  /* 02: a persistent sidebar and a clean, split introduction. */
+  .field-notes .site-frame { max-width: 1400px; padding-left: 200px; padding-right: 48px; }
+  .field-notes .masthead { position: fixed; top: 80px; left: max(28px, calc((100vw - 1400px) / 2 + 32px)); width: 128px; height: calc(100vh - 130px); border: 0; border-right: 1px solid var(--line); flex-direction: column; align-items: flex-start; padding: 0 20px 0 0; gap: 24px; }
+  .field-notes .masthead-note { font-size: 10px; }
+  .field-notes .monogram { white-space: normal; }
+  .field-notes nav { margin: 20px 0 auto; flex-direction: column; gap: 24px; }
+  .field-notes nav a::before { content: '+ '; color: var(--accent); }
+  .field-notes h1, .field-notes h2, .field-notes .lede, .field-notes .essay h3 { font-family: var(--t-font-heading); }
+  .field-notes h1 { grid-column: 1; grid-row: 2; font-weight: 900; font-size: clamp(56px, 7vw, 108px); align-self: end; }
+  .field-notes h1 > span { display: block; font-style: normal; }
+  .field-notes .cover { grid-template-columns: 1.4fr 1fr; gap: 32px; padding-top: 40px; }
+  .field-notes .cover-kicker { background: var(--paper); padding: 12px 0; }
+  .field-notes .portrait { grid-column: 2; grid-row: 2/4; align-self: center; transform: rotate(3deg); border: 1px solid var(--line); padding: 12px; background: var(--paper); }
+  .field-notes .portrait img { height: 320px;  }
+  .field-notes .cover-copy { grid-column: 1; grid-row: 3; background: var(--paper); padding: 20px 12px 0 0; gap: 20px; }
+  .field-notes .lede { font-size: 26px; }
+  .field-notes .lede em { color: var(--accent); font-style: normal; }
+  .field-notes .primary-link { background: var(--accent); color: var(--t-cta-text); border: 0; padding: 12px 20px; }
+  .field-notes .section-heading { border-top: 1px solid var(--accent); }
+  .field-notes h2 { font-weight: 600; font-size: 36px; }
+  .field-notes .project { background: color-mix(in srgb, var(--ink) 4%, var(--paper)); border: 1px solid var(--line); }
+  .field-notes .project.locknight { background: color-mix(in srgb, var(--ink) 4%, var(--paper)); }
+  .field-notes .essay h3 { font-size: 20px; }
+  .field-notes .about-section h2 em, .field-notes .contact-section h2 em { color: var(--accent); font-style: normal; }
+  .field-notes .contact-section { border-top-color: var(--accent); }
+  .field-notes .about-section { margin-top: 0; padding-bottom: 48px; }
+
+  /* 03: a poster-like studio wall, with a portrait and offset blocks. */
+  .studio .site-frame { max-width: 1280px; }
+  .studio .masthead { border-bottom: 0; padding: 32px 0; }
+  .studio .cover { min-height: 620px; grid-template-columns: 1.2fr 1fr; padding: 16px 0 72px; gap: 32px; }
+  .studio .cover-kicker { border-bottom: 1px solid var(--line); padding-bottom: 16px; }
+  .studio h1 { grid-column: 1/-1; grid-row: 2; z-index: 1; font: 900 clamp(76px, 11.5vw, 162px)/.87 var(--t-font-heading); letter-spacing: -.07em; align-self: start; pointer-events: none; }
+  .studio h1 > span { display: block; font-style: normal; margin-left: 9%; }
+  .studio .portrait { grid-column: 2; grid-row: 2/4; align-self: start; margin-top: 60px; padding: 16px 16px 12px; background: var(--paper); transform: rotate(5deg); box-shadow: 4px 8px 0 var(--t-highlight); }
+  .studio .portrait img { height: 360px;  }
+  .studio .portrait figcaption { text-align: center; letter-spacing: .02em; text-transform: none; font-family: var(--t-font-body); font-style: normal; font-size: 14px; }
+  .studio .photo-index { display: none; }
+  .studio .cover-copy { grid-column: 1; grid-row: 3; padding-top: 48px; padding-right: 40px; }
+  .studio .lede { font-size: 28px; }
+  .studio .primary-link { border: 0; border-radius: 8px; padding: 12px 24px; background: var(--accent); color: var(--t-cta-text); }
+  .studio .cover-margin { display: block; position: absolute; right: -12px; bottom: 28px; font-size: 10px; text-transform: uppercase; letter-spacing: .2em; }
+  .studio .section-heading { border: 0; padding: 32px 0; }
+  .studio .section-index { text-transform: uppercase; font-size: 10px; letter-spacing: .1em; }
+  .studio .work-grid { gap: 28px; padding-bottom: 40px; }
+  .studio .project { background: color-mix(in srgb, var(--ink) 4%, var(--paper)); padding: 28px; }
+  .studio .project.locknight { background: color-mix(in srgb, var(--ink) 4%, var(--paper)); margin-top: 48px; margin-bottom: -24px; }
+  .studio .project p { color: var(--muted); }
+  .studio .project:hover { box-shadow: 0 0 0 2px var(--ink); }
+  .studio .writing-section { padding-top: 32px; }
+  .studio .essay h3 { font-family: var(--t-font-heading); font-size: 21px; font-weight: 600; }
+  .studio .essay-index { border: 1px solid var(--line); border-radius: 50%; height: 28px; display: grid; place-items: center; }
+  .studio .about-section { background: color-mix(in srgb, var(--ink) 4%, var(--paper)); padding: 32px; border: 0; }
+  .studio .contact-section { border: 0; text-align: center; padding-top: 64px; }
+  .studio .contact-section .primary-link { display: inline-flex; }
+
+  @media (max-width: 900px) {
+    .site-frame { padding-inline: 28px; }
+    .field-notes .site-frame { padding-left: 160px; padding-right: 28px; }
+    .field-notes .masthead { width: 100px; left: 28px; }
+    .cover { gap: 24px; }
+    .cover-kicker { gap: 16px; }
+    .masthead-note { display: none; }
+    .studio .cover { min-height: auto; }
+    .studio .portrait img { height: 300px; }
+    .studio .cover-copy { padding-right: 0; }
+    .field-notes h1 { font-size: clamp(48px, 6.5vw, 78px); }
+    .field-notes .portrait img { height: 260px; }
+    .work-grid { gap: 16px; }
+    .project { padding: 20px; }
+    .essay { gap: 16px; }
+    footer { flex-wrap: wrap; }
+  }
+  @media (max-width: 640px) {
+    .site-frame, .field-notes .site-frame { padding-inline: 20px; }
+    .study-bar { padding: 8px 20px; flex-wrap: wrap; font-size: 10px; }
+    .study-bar > span { display: none; }
+    .masthead, .field-notes .masthead { position: static; width: auto; height: auto; flex-direction: row; flex-wrap: wrap; border: 0; border-bottom: 1px solid var(--line); padding: 16px 0; gap: 12px; }
+    nav, .field-notes nav { order: 3; flex-basis: 100%; gap: 12px; margin: 0; flex-direction: row; font-size: 12px; flex-wrap: wrap; justify-content: space-between; }
+    .field-notes nav a::before { content: none; }
+    .monogram { font-size: 16px; }
+    .cover, .field-notes .cover, .studio .cover { grid-template-columns: 1fr; gap: 24px; padding-block: 24px 48px; }
+    .cover-kicker { flex-direction: column; gap: 6px; font-size: 9px; }
+    h1, .field-notes h1, .studio h1 { grid-column: 1; grid-row: auto; font-size: clamp(56px, 15vw, 96px); padding: 0; }
+    h1 > span { display: block; }
+    .studio h1 > span { margin-left: 0; }
+    .portrait, .field-notes .portrait, .studio .portrait { grid-column: 1; grid-row: auto; width: min(100%, 360px); margin: 0; transform: none; }
+    .portrait img, .field-notes .portrait img, .studio .portrait img { height: 300px; }
+    .cover-copy, .field-notes .cover-copy, .studio .cover-copy { grid-column: 1; grid-row: auto; padding: 0; gap: 20px; }
+    .lede { font-size: 32px; }
+    .section-heading { grid-template-columns: 1fr; gap: 16px; }
+    h2, .field-notes h2 { font-size: 32px; }
+    .section-heading > a { justify-self: start; }
+    .work-grid { grid-template-columns: 1fr; }
+    .studio .project.locknight { margin: 0; }
+    .essay { grid-template-columns: 24px 1fr 16px; gap: 12px; }
+    .essay h3 { font-size: 22px; }
+    .essay-date { grid-column: 2; grid-row: 2; }
+    .essay > span:last-child { grid-column: 3; grid-row: 1; }
+    .about-section { grid-template-columns: 1fr; gap: 24px; margin-top: 40px; padding-block: 24px; }
+    .studio .about-section { padding: 24px; }
+    .contact-section .primary-link { font-size: 12px; gap: 16px; }
+    footer { flex-direction: column; gap: 16px; }
+      .studio .cover-margin { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
+</style>

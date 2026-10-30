@@ -1,0 +1,14 @@
+---
+import tokens from "../../design-tokens.json"
+const variables = (colors: typeof tokens.colors.lightMode) => Object.entries({
+  primary: colors.primary, secondary: colors.secondary, cta: colors.cta,
+  "cta-hover": colors.ctaHover, "cta-text": colors.ctaText,
+  surface: colors.background, text: colors.text, border: colors.border,
+  muted: colors.muted, highlight: colors.highlight, "text-highlight": colors.textHighlight,
+}).map(([name, value]) => `--t-${name}:${value};`).join("")
+---
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href={tokens.fonts.googleFontsUrl} />
+<style is:inline set:html={`:root{${variables(tokens.colors.lightMode)}--t-font-heading:'${tokens.fonts.heading}',sans-serif;--t-font-body:'${tokens.fonts.body}',sans-serif;--t-font-code:'${tokens.fonts.code}',monospace;color-scheme:light}html[saved-theme="dark"]{${variables(tokens.colors.darkMode)}color-scheme:dark}`} />
+<script is:inline src="/assets/theme.js?v=2026-10-30"></script>

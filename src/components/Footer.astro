@@ -1,7 +1,20 @@
-<footer class="footer">
-  <span>&copy; 2026 Natalie Johanek</span>
-  <span class="footer-links">
-    <a href="/privacy/">Privacy</a>
-    <span style="font-family:var(--t-font-code,'IBM Plex Mono',monospace);font-size:11px">v2026.04</span>
-  </span>
+---
+import tokens from "../../design-tokens.json"
+---
+<footer class="site-footer">
+  <span>&copy; {new Date().getFullYear()} {tokens.site.name}</span>
+  <nav aria-label="Footer">
+    <a href={tokens.site.github}>GitHub ↗</a>
+    <a href={tokens.site.linkedin}>LinkedIn ↗</a>
+    <a href="/blog/index.xml" data-router-ignore>RSS</a>
+    <a href="/privacy/" data-router-ignore>Privacy</a>
+  </nav>
 </footer>
+<style>
+  .site-footer { box-sizing: border-box; width: min(100% - 64px, 1120px); margin: 64px auto 0; padding: 24px 0 32px; border-top: 1px solid var(--t-border); display: flex; justify-content: space-between; gap: 20px; opacity: 1; color: var(--t-muted); font: 400 13px/1.6 var(--t-font-body); }
+  nav { display: flex; flex-wrap: wrap; gap: 20px; }
+  a { color: var(--t-muted); text-decoration: none; padding-block: 8px; }
+  a:hover { color: var(--t-cta); text-decoration: underline; text-underline-offset: 4px; }
+  a:focus-visible { outline: 2px solid var(--t-cta); outline-offset: 4px; }
+  @media (max-width: 640px) { .site-footer { width: calc(100% - 40px); flex-direction: column; margin-top: 40px; } }
+</style>

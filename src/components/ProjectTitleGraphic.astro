@@ -1,0 +1,56 @@
+---
+interface Props { project: "hema" | "locknight" }
+const { project } = Astro.props
+const isHema = project === "hema"
+---
+<svg class="project-title-graphic" viewBox="0 0 720 320" role="img" aria-labelledby={`${project}-graphic-title`}>
+  <title id={`${project}-graphic-title`}>{isHema ? "HEMA Scorecard Scripts — tools for analyzing fencing tournament data" : "Locknight — draft Deadlock teams and track match results"}</title>
+  <rect class="graphic-surface" x="1" y="1" width="718" height="318" rx="12" />
+  <path class="graphic-rule" d="M40 50h32M40 268h640" />
+  {
+    isHema ? (
+      <>
+        <text class="graphic-title" x="40" y="134">HEMA</text>
+        <text class="graphic-subtitle" x="42" y="172">SCORECARD SCRIPTS</text>
+        <text class="graphic-caption" x="42" y="234">Fencing tournament analysis</text>
+        <g class="graphic-illustration" aria-hidden="true">
+          <path class="graphic-rule" d="M472 75h36v44h36M472 163h36v-44M544 119h42v67h44M544 251h42v-65" />
+          <rect class="graphic-card" x="437" y="65" width="40" height="20" rx="4" />
+          <rect class="graphic-card" x="437" y="153" width="40" height="20" rx="4" />
+          <rect class="graphic-card" x="518" y="241" width="40" height="20" rx="4" />
+          <rect class="graphic-accent" x="624" y="170" width="22" height="32" rx="4" />
+          <circle class="graphic-accent" cx="544" cy="119" r="5" />
+        </g>
+      </>
+    ) : (
+      <>
+        <text class="graphic-title locknight-wordmark" x="40" y="134">LOCKNIGHT</text>
+        <text class="graphic-subtitle" x="42" y="172">DEADLOCK DRAFT TOOLS</text>
+        <text class="graphic-caption" x="42" y="234">Draft teams. Track matches.</text>
+        <g class="graphic-illustration" aria-hidden="true">
+          <rect class="graphic-card" x="480" y="62" width="72" height="192" rx="10" />
+          <rect class="graphic-card" x="576" y="62" width="72" height="192" rx="10" />
+          <path class="graphic-rule" d="M492 94h48M588 94h48" />
+          <rect class="graphic-accent" x="496" y="113" width="40" height="22" rx="4" />
+          <rect class="graphic-accent" x="592" y="149" width="40" height="22" rx="4" />
+          <rect class="graphic-muted-card" x="496" y="149" width="40" height="22" rx="4" />
+          <rect class="graphic-muted-card" x="496" y="185" width="40" height="22" rx="4" />
+          <rect class="graphic-muted-card" x="592" y="113" width="40" height="22" rx="4" />
+          <rect class="graphic-muted-card" x="592" y="185" width="40" height="22" rx="4" />
+        </g>
+      </>
+    )
+  }
+</svg>
+<style>
+  .project-title-graphic { width: 100%; height: auto; display: block; margin: 20px 0 24px; }
+  .graphic-surface { fill: var(--t-surface); stroke: var(--t-border); stroke-width: 2; }
+  .graphic-title { fill: var(--t-cta); font: 900 76px var(--t-font-heading); letter-spacing: -3px; }
+  .locknight-wordmark { font-size: 55px; letter-spacing: -2px; }
+  .graphic-subtitle { fill: var(--t-primary); font: 600 22px var(--t-font-body); letter-spacing: 1px; }
+  .graphic-caption { fill: var(--t-muted); font: 400 19px var(--t-font-body); }
+  .graphic-rule { fill: none; stroke: var(--t-border); stroke-width: 3; }
+  .graphic-card { fill: var(--t-surface); stroke: var(--t-muted); stroke-width: 2; }
+  .graphic-accent { fill: var(--t-cta); }
+  .graphic-muted-card { fill: var(--t-border); }
+</style>

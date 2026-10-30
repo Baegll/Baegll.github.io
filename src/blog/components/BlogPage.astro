@@ -7,7 +7,7 @@ import Head from "./Head.astro"
 import Script from "./Script.astro"
 import PageTitle from "./PageTitle.astro"
 import Search from "./Search.astro"
-import Darkmode from "./Darkmode.astro"
+import SiteHeader from "../../components/SiteHeader.astro"
 import ReaderMode from "./ReaderMode.astro"
 import Explorer from "./Explorer.astro"
 import Breadcrumbs from "./Breadcrumbs.astro"
@@ -18,7 +18,7 @@ import RecentNotes from "./RecentNotes.astro"
 import Graph from "./Graph.astro"
 import TableOfContents from "./TableOfContents.astro"
 import Backlinks from "./Backlinks.astro"
-import Footer from "./Footer.astro"
+import Footer from "../../components/Footer.astro"
 
 /**
  * Page shell shared by every blog page; the page body goes in the default slot.
@@ -45,6 +45,7 @@ const flexItem = (grow: boolean) =>
 <html lang={lang} dir={direction}>
   <Head fileData={fileData} resources={resources} />
   <body data-slug={slug}>
+    <SiteHeader />
     <div id="quartz-root" class="page">
       <div id="quartz-body">
         <div class="left sidebar">
@@ -59,9 +60,6 @@ const flexItem = (grow: boolean) =>
                 >
                   <div style={flexItem(true)}>
                     <Search />
-                  </div>
-                  <div style={flexItem(false)}>
-                    <Darkmode />
                   </div>
                   {layout === "content" && (
                     <div style={flexItem(false)}>
@@ -81,7 +79,7 @@ const flexItem = (grow: boolean) =>
             )
           }
         </div>
-        <div class="center">
+        <main class="center" id="main" tabindex="-1">
           <div class="page-header">
             <div class="popover-hint">
               {
@@ -110,30 +108,33 @@ const flexItem = (grow: boolean) =>
           <div class="page-footer">
             {slug === "index" && <RecentNotes fileData={fileData} allFiles={allFiles} limit={5} />}
           </div>
-        </div>
+        </main>
         <div class="right sidebar">
           {
             layout === "content" && (
               <Fragment>
-                <Graph />
                 <TableOfContents
                   fileData={fileData}
                   id="toc-0"
                   listId={overflowListIds.toc}
                   displayClass="desktop-only"
                 />
-                <Backlinks
-                  fileData={fileData}
-                  allFiles={allFiles}
-                  listId={overflowListIds.backlinks}
-                />
+                <details class="blog-connections">
+                  <summary>Explore connections</summary>
+                  <Graph />
+                  <Backlinks
+                    fileData={fileData}
+                    allFiles={allFiles}
+                    listId={overflowListIds.backlinks}
+                  />
+                </details>
               </Fragment>
             )
           }
         </div>
-        <Footer />
       </div>
     </div>
+    <Footer />
   </body>
   {
     resources.js

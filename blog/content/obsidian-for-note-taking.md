@@ -14,7 +14,7 @@ Obsidian, like many note taking apps helps you organize your thoughts. Personall
 ## Linked Notes
 Notes are created just as easily as writing in a new file, but you can easily link files together, for example, I have been working on my LLD's for TEZ this past week. I've frequently been writing in multiple files for general notes, and linking other service docs' information for reference. This non-linear note taking is much easier to work with due to how the brain deals with information.
 
-Creating these links is done with \[\[Double Brackets]] to the file-name youre linking. If you haven't written this file yet, if you click on that link, Obsidian will create that document for you. Creating these links also lets you see what notes you have that reference your current file. This builds a web of information that is easy to parse and lets you view relevant docs very easily.
+Creating these links is done with `[[Double Brackets]]` to the file-name youre linking. If you haven't written this file yet, if you click on that link, Obsidian will create that document for you. Creating these links also lets you see what notes you have that reference your current file. This builds a web of information that is easy to parse and lets you view relevant docs very easily.
 
 Obsidian can also use these links to create a [[#Graph View]]
 

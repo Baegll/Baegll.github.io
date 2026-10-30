@@ -26,7 +26,6 @@ import customStyle from "../quartz/styles/custom.scss?quartz-css"
 // component scripts
 import clipboardScript from "../quartz/components/scripts/clipboard.inline?quartz-inline"
 import searchScript from "../quartz/components/scripts/search.inline?quartz-inline"
-import darkmodeScript from "../quartz/components/scripts/darkmode.inline?quartz-inline"
 import readermodeScript from "../quartz/components/scripts/readermode.inline?quartz-inline"
 import explorerScript from "../quartz/components/scripts/explorer.inline?quartz-inline"
 import graphScript from "../quartz/components/scripts/graph.inline?quartz-inline"
@@ -162,7 +161,7 @@ const componentCss = [
   pageListStyle,
 ]
 
-const beforeDOMLoaded = [darkmodeScript, readermodeScript]
+const beforeDOMLoaded = [readermodeScript]
 
 const afterDOMLoaded = [
   clipboardScript,

@@ -1,0 +1,12 @@
+---
+interface Props { number: string }
+const { number } = Astro.props
+---
+<section class="about-section" id="about" aria-labelledby="about-title">
+  <span class="section-index">{number} / A little context</span>
+  <h2 id="about-title">A bit about me.</h2>
+  <div>
+    <p>I'm an SDE2 at Amazon working on distributed systems for last-mile delivery. I build low-latency APIs under strict SLAs, architect data pipelines, and care deeply about developer tooling and system observability.</p>
+    <p>Outside of work, I coach competitive fencing, run tournament operations, and write about software. I studied Computer Science at the University of North Texas with a minor in Mathematics.</p>
+  </div>
+</section>

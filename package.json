@@ -9,7 +9,9 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "check": "astro check"
+    "check": "astro check",
+    "check:links": "node scripts/check-site-links.mjs",
+    "perf": "node scripts/measure-site.mjs"
   },
   "dependencies": {
     "@floating-ui/dom": "^1.7.4",

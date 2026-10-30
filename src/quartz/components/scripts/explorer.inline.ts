@@ -228,7 +228,12 @@ async function setupExplorer(currentSlug: FullSlug) {
       // try to scroll to the active element if it exists
       const activeElement = explorerUl.querySelector(".active")
       if (activeElement) {
-        activeElement.scrollIntoView({ behavior: "smooth" })
+        // Keep the active item visible inside the explorer without scrolling the article.
+        const item = activeElement.getBoundingClientRect()
+        const list = explorerUl.getBoundingClientRect()
+        if (item.top < list.top || item.bottom > list.bottom) {
+          explorerUl.scrollTop += item.top - list.top
+        }
       }
     }
 
